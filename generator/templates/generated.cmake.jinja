@@ -1,0 +1,5 @@
+set(MJSDL_GENERATED_HEADERS 
+    {%- for header in headers %}
+    include/mjsdl/{{header}}.hpp
+    {%- endfor %}
+)

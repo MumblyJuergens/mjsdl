@@ -1,0 +1,82 @@
+#pragma once
+
+#include <SDL3/SDL_version.h>
+#if SDL_VERSION_ATLEAST({{min_sdl_version}})
+
+// This is a generated file!
+// For contributions please consider changes in the "generator" directory.
+
+#include "compat.hpp"
+#include <SDL3/SDL.h>
+#include "guard.hpp"
+#include <utility>
+{%- for x in extra_headers %}
+#include {{ x }}
+{% endfor %}
+
+namespace mjsdl
+{
+
+class MJSDL_NODISCARD {{cpp_name}} final
+{
+    {{sdl_type}} item{};
+    {%- for x in ctor_args if x.store %}
+        {{x.type}} _{{x.name}}{};
+    {% endfor %}
+  public:
+    {% if not no_default_ctor %}MJSDL_NODISCARD {{cpp_name}}() = default;{% endif %}
+    {% if not no_native_ctor %}MJSDL_NODISCARD {{cpp_name}}({{sdl_type}} native {% for x in ctor_args if x.dtor_arg %}, {{x.type}} {{x.name}}{% endfor %})
+    : item{native} {% for x in ctor_args if x.dtor_arg %}, _{{x.name}}{ {{x.name}} }{% endfor %}{}{% endif %}
+
+    {% if not no_ctor %}
+    {% set comma = joiner(',') %}
+    template<typename Guard = MJSDL_GUARD_DEFAULT>
+    MJSDL_NODISCARD {{cpp_name}}({% for x in ctor_args %}{{ comma() }}{{x.type}} {{x.name}}{% endfor %}{{ comma() }} Guard guard = {})
+    {%- if has_init_list -%} : {% set comma = joiner(',') %}
+        {%- for x in ctor_args if x.store -%}
+            {{ comma() }}
+            _{{x.name}}{ {{x.name}} }
+        {%- endfor -%}
+    {%- endif -%}
+    {
+        {%- set comma = joiner(',') %}
+        item = SDL_Create{{cpp_name}}({% for x in ctor_args %}{{ comma() }}{{x.name}}{% endfor %});
+        guard(item);
+    }
+    {% endif %}
+
+    {{cpp_name}}(const {{cpp_name}} &) = delete;
+    {{cpp_name}}& operator=(const {{cpp_name}} &) = delete;
+
+    MJSDL_NODISCARD {{cpp_name}}({{cpp_name}} &&other) noexcept { *this=std::move(other); }
+    {{cpp_name}}& operator=({{cpp_name}} &&other) noexcept
+    {
+        item = std::exchange(other.item, nullptr);
+        {% for x in ctor_args if x.store %}
+            _{{x.name}} = std::exchange(other._{{x.name}}, decltype(_{{x.name}}){});
+        {% endfor %}
+        return *this;
+    }
+
+    {% if not no_dtor %}
+    ~{{cpp_name}}()
+    {
+        if (item) SDL_{{sdl_dtor_verb}}{{cpp_name}}({% for x in ctor_args if x.dtor_arg %}_{{x.name}},{% endfor %} item);
+    }
+    {% endif %}
+
+    MJSDL_NODISCARD auto get() const noexcept { return item; }
+    MJSDL_NODISCARD bool is_valid() const noexcept { return item; }
+    MJSDL_NODISCARD auto release() noexcept { return std::exchange(item, nullptr); }
+
+    // |            | //
+    // | Extra Toys | //
+    // V            V //
+
+    {{toys}}
+
+};
+
+} // End of namespace mjsdl.
+
+#endif

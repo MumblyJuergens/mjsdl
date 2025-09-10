@@ -1,0 +1,7 @@
+---
+BasedOnStyle: Google
+Standard: Latest
+IndentWidth: 4
+KeepEmptyLinesAtTheStartOfBlocks: false
+KeepEmptyLinesAtEOF: false
+
