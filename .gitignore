@@ -1,1 +1,5 @@
 build
+*.toc.*
+*.orig.*
+.cache
+compile_commands.json
