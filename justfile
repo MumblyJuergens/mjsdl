@@ -19,3 +19,9 @@ generate:
     source venv/bin/activate
     python gen_mjsdl.py
 
+[unix]
+gogogo:
+    rm -rf build
+    cmake -B build -DCMAKE_BUILD_TYPE=Release
+    cmake --build build
+    cmake --install build --prefix /home/mumbly/code/instalol
