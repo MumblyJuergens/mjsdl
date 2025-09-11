@@ -6,15 +6,10 @@ project(mjsdl
         HOMEPAGE_URL "https://mumblyjuergens.github.io/mjsdl/"
         LANGUAGES CXX)
 
+option(MJSDL_WORK_HARD "Just for during development" OFF)
+
+
 include(GNUInstallDirs)
-
-# Are we bundled...
-if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-  set(NOT_SUBPROJECT ON)
-else()
-  set(NOT_SUBPROJECT OFF)
-endif()
-
 
 find_package(SDL3 REQUIRED)
 # CPMAddPackage("gh:libsdl-org/SDL#release-3.2.20")
@@ -38,7 +33,7 @@ target_include_directories(mjsdl
 INTERFACE   $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
-IF(NOT_SUBPROJECT)
+IF(MJSDL_WORK_HARD)
     MJSDLFullCompilerWarnings(mjsdl INTERFACE)
 endif()
 
@@ -72,7 +67,7 @@ install(FILES
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/mjsdl DESTINATION include)
 
 
-if(NOT_SUBPROJECT)
+if(MJSDL_WORK_HARD)
     add_executable(testharness testharness/main.cpp)
     target_compile_features(testharness PUBLIC cxx_std_23)
     target_link_libraries(testharness PUBLIC mjsdl::mjsdl)
