@@ -21,7 +21,7 @@ class ctor_error : public std::runtime_error {
 
 struct guard_throws {
     void operator()(bool test) {
-        if (test) throw ctor_error{SDL_GetError()};
+        if (!test) throw ctor_error{SDL_GetError()};
     }
 };
 
