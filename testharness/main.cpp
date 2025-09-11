@@ -1,13 +1,5 @@
 // Make sure the examples in the documentation are valid code at least.
 
-#include "mjsdl/GPUDevice.hpp"
-#include "mjsdl/Window.hpp"
-#include "mjsdl/guard.hpp"
-#include <SDL3/SDL_error.h>
-#include <SDL3/SDL_gpu.h>
-#include <SDL3/SDL_log.h>
-#include <SDL3/SDL_render.h>
-#include <SDL3/SDL_video.h>
 #include <mjsdl/mjsdl.hpp>
 #include <stdexcept>
 
@@ -68,7 +60,7 @@ void full_mjsdl()
     guard(SDL_ClaimWindowForGPUDevice(device.get(), window.get()));
 }
 
-std::tuple<mjsdl::Window, mjsdl::GPUDevice> buildsdl()
+std::pair<mjsdl::Window, mjsdl::GPUDevice> buildsdl()
 {
     // Rmember, in deep functions whitespace is your friend.
 

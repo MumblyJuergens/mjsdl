@@ -73,10 +73,11 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/mjsdl DESTINATION include)
 
 
 if(NOT_SUBPROJECT)
-    add_executable(mjsdl_docexamples docexamples/main.cpp)
-    target_compile_features(mjsdl_docexamples PUBLIC cxx_std_23)
-    target_link_libraries(mjsdl_docexamples PUBLIC mjsdl::mjsdl)
-    MJSDLFullCompilerWarnings(mjsdl_docexamples PUBLIC)
+    add_executable(testharness testharness/main.cpp)
+    target_compile_features(testharness PUBLIC cxx_std_23)
+    target_link_libraries(testharness PUBLIC mjsdl::mjsdl)
+    target_compile_definitions(testharness PUBLIC -DMJSDL_GUARD_DEFAULT=mjsdl::guard_throws)
+    MJSDLFullCompilerWarnings(testharness PUBLIC)
 endif()
 
 if(NOT_SUBPROJECT)
