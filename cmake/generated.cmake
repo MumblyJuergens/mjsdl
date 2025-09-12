@@ -3,14 +3,16 @@ set(MJSDL_GENERATED_HEADERS
     include/mjsdl/AudioStream.hpp
     include/mjsdl/Cursor.hpp
     include/mjsdl/Environment.hpp
+    include/mjsdl/Renderer.hpp
+    include/mjsdl/Surface.hpp
+    include/mjsdl/Window.hpp
     include/mjsdl/GPUBuffer.hpp
     include/mjsdl/GPUComputePipeline.hpp
     include/mjsdl/GPUDevice.hpp
     include/mjsdl/GPUGraphicsPipeline.hpp
+    include/mjsdl/GPUSampler.hpp
     include/mjsdl/GPURenderState.hpp
+    include/mjsdl/GPUTexture.hpp
     include/mjsdl/GPUShader.hpp
     include/mjsdl/GPUTransferBuffer.hpp
-    include/mjsdl/Renderer.hpp
-    include/mjsdl/Surface.hpp
-    include/mjsdl/Window.hpp
 )

@@ -1,35 +1,5 @@
 [
     {
-        "name": "AsyncIOQueue",
-        "ctor_args": [],
-        "toys": "toys/AsyncIOQueueToys.inc"
-    },
-    {
-        "name": "AudioStream",
-        "ctor_args": [
-            { "type": "const SDL_AudioSpec *", "name": "src_spec"},
-            { "type": "const SDL_AudioSpec *", "name": "dst_spec"},
-        ]
-        // TODO: Add toys, there could be a few but I'm unfamiliar with it atm.
-    },
-    {
-        // TODO: Reassess.
-        // Mutiple types of cursor creation methods, same pointer type and
-        // dtor, no way to *clearly* tell the difference between multiple
-        // constructors. Opting to leave creation to the user for the moment.
-        // May introduce toys with well named static factory methods.
-        "name": "Cursor",
-        "no_ctor": true,
-    },
-    {
-        "name": "Environment",
-        "extra_headers": ["\"memory.hpp\""],
-        "ctor_args": [
-            { "type": "bool", "name": "populated" }
-        ],
-        "toys": "toys/EnvironmentToys.inc"
-    },
-    {
         "name": "GPUBuffer",
         "extra_headers": [
             "<SDL3/SDL_gpu.h>",
@@ -70,6 +40,15 @@
         ]
     },
     {
+        "name": "GPUSampler",
+        "extra_headers": [ "<SDL3/SDL_gpu.h>" ],
+        "dtor_verb": "Release",
+        "ctor_args": [
+            { "type": "SDL_GPUDevice *", "name":"device", "store": true, "dtor_arg": true },
+            { "type": "const SDL_GPUSamplerCreateInfo *", "name": "createinfo" }
+        ]
+    },
+    {
         "name": "GPURenderState",
         "min_sdl_version": "3, 4, 0",
         "ctor_args": [
@@ -77,6 +56,17 @@
             { "type": "SDL_GPURenderStateCreateInfo *", "name": "createinfo" }
         ],
         "toys": "toys/GPURenderStateToys.inc"
+    },
+    {
+        "name": "GPUTexture",
+        "extra_headers": [
+            "<SDL3/SDL_gpu.h>",
+        ],
+        "dtor_verb": "Release",
+        "ctor_args": [
+                { "type": "SDL_GPUDevice *", "name":"device", "store": true, "dtor_arg": true },
+                { "type": "const SDL_GPUTextureCreateInfo *", "name": "createinfo" }
+            ],
     },
     {
         "name": "GPUShader",
@@ -100,31 +90,5 @@
                 { "type": "const SDL_GPUTransferBufferCreateInfo *", "name": "createinfo" }
             ],
         "toys": "toys/GPUTransferBufferToys.inc"
-    },
-    {
-        "name": "Renderer",
-        "extra_headers": [ "\"GPUDevice.hpp\"" ],
-        "ctor_args": [
-                { "type": "SDL_Window *", "name":"window" },
-                { "type": "const char *", "name": "name" }
-            ],
-        "toys": "toys/RendererToys.inc"
-    },
-    {
-        "name": "Surface",
-        "ctor_args": [
-                { "type": "int", "name": "width" },
-                { "type": "int", "name": "height" },
-                { "type": "SDL_PixelFormat", "name": "format" }
-            ],
-    },
-    {
-        "name": "Window",
-        "ctor_args": [
-                { "type": "const char *", "name": "title" },
-                { "type": "int", "name": "w" },
-                { "type": "int", "name": "h" },
-                { "type": "SDL_WindowFlags", "name": "flags" }
-            ],
     },
 ]

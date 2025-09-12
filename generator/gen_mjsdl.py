@@ -7,14 +7,34 @@ from collections import namedtuple
 
 CPPType = namedtuple("CPPType", ["name", "type", "store", "dtor_arg"])
 
+env = Environment(loader=FileSystemLoader("templates"))
+headers = []
 
-def go() -> None:
 
-    env = Environment(loader=FileSystemLoader("templates"))
+def process_data_files() -> None:
+    for file in os.listdir("data"):
+        go(os.path.join("data", file))
 
-    headers = []
+    with open(
+        "../include/mjsdl/generated.hpp", mode="w", encoding="utf-8"
+    ) as headerout:
+        print("#pragma once", file=headerout)
+        for header in headers:
+            print(f'#include "{header}.hpp"', file=headerout)
 
-    with open("classes.json") as jsonfile:
+    template = env.get_template("generated.cmake.jinja")
+    output = template.render(
+        headers=headers,
+    )
+    with open(
+        "../cmake/generated.cmake", mode="w", encoding="utf-8"
+    ) as cmakeout:  # lol make out
+        print(output, file=cmakeout)
+
+
+def go(filename: str) -> None:
+
+    with open(filename) as jsonfile:
         data = rapidjson.load(
             jsonfile, parse_mode=rapidjson.PM_COMMENTS | rapidjson.PM_TRAILING_COMMAS
         )
@@ -73,22 +93,6 @@ def go() -> None:
             print(output, file=headerout)
         os.system(f"clang-format -i -style=file ../include/mjsdl/{cpp_name}.hpp")
 
-    with open(
-        "../include/mjsdl/generated.hpp", mode="w", encoding="utf-8"
-    ) as headerout:
-        print("#pragma once", file=headerout)
-        for header in headers:
-            print(f'#include "{header}.hpp"', file=headerout)
-
-    template = env.get_template("generated.cmake.jinja")
-    output = template.render(
-        headers=headers,
-    )
-    with open(
-        "../cmake/generated.cmake", mode="w", encoding="utf-8"
-    ) as cmakeout:  # lol make out
-        print(output, file=cmakeout)
-
 
 if __name__ == "__main__":
-    go()
+    process_data_files()
