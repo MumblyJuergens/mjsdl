@@ -15,4 +15,5 @@ set(MJSDL_GENERATED_HEADERS
     include/mjsdl/GPUTexture.hpp
     include/mjsdl/GPUShader.hpp
     include/mjsdl/GPUTransferBuffer.hpp
+    include/mjsdl/Surface.hpp
 )

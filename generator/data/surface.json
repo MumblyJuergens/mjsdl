@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Surface",
+        "ctor_args": [
+            { "type": "int", "name": "width" },
+            { "type": "int", "name": "height" },
+            { "type": "SDL_PixelFormat", "name": "format" }
+        ],
+    },
+]

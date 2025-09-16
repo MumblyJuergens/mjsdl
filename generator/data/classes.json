@@ -39,14 +39,6 @@
         "toys": "toys/RendererToys.inc"
     },
     {
-        "name": "Surface",
-        "ctor_args": [
-                { "type": "int", "name": "width" },
-                { "type": "int", "name": "height" },
-                { "type": "SDL_PixelFormat", "name": "format" }
-            ],
-    },
-    {
         "name": "Window",
         "ctor_args": [
                 { "type": "const char *", "name": "title" },

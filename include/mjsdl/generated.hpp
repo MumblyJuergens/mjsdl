@@ -15,3 +15,4 @@
 #include "GPUTexture.hpp"
 #include "GPUShader.hpp"
 #include "GPUTransferBuffer.hpp"
+#include "Surface.hpp"
