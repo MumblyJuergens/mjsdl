@@ -37,6 +37,7 @@ class MJSDL_NODISCARD GPURenderState final {
         *this = std::move(other);
     }
     GPURenderState &operator=(GPURenderState &&other) noexcept {
+        if (item) SDL_DestroyGPURenderState(item);
         item = std::exchange(other.item, nullptr);
 
         return *this;

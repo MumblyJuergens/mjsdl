@@ -42,6 +42,7 @@ class MJSDL_NODISCARD GPUGraphicsPipeline final {
         *this = std::move(other);
     }
     GPUGraphicsPipeline &operator=(GPUGraphicsPipeline &&other) noexcept {
+        if (item) SDL_ReleaseGPUGraphicsPipeline(_device, item);
         item = std::exchange(other.item, nullptr);
 
         _device = std::exchange(other._device, decltype(_device){});

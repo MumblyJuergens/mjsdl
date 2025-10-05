@@ -36,6 +36,7 @@ class MJSDL_NODISCARD Surface final {
         *this = std::move(other);
     }
     Surface &operator=(Surface &&other) noexcept {
+        if (item) SDL_DestroySurface(item);
         item = std::exchange(other.item, nullptr);
 
         return *this;

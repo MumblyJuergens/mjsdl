@@ -37,6 +37,7 @@ class MJSDL_NODISCARD GPUDevice final {
         *this = std::move(other);
     }
     GPUDevice &operator=(GPUDevice &&other) noexcept {
+        if (item) SDL_DestroyGPUDevice(item);
         item = std::exchange(other.item, nullptr);
 
         return *this;

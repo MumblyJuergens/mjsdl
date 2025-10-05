@@ -36,6 +36,7 @@ class MJSDL_NODISCARD Window final {
         *this = std::move(other);
     }
     Window &operator=(Window &&other) noexcept {
+        if (item) SDL_DestroyWindow(item);
         item = std::exchange(other.item, nullptr);
 
         return *this;

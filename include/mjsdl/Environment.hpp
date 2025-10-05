@@ -36,6 +36,7 @@ class MJSDL_NODISCARD Environment final {
         *this = std::move(other);
     }
     Environment &operator=(Environment &&other) noexcept {
+        if (item) SDL_DestroyEnvironment(item);
         item = std::exchange(other.item, nullptr);
 
         return *this;

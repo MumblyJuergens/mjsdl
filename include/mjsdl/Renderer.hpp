@@ -37,6 +37,7 @@ class MJSDL_NODISCARD Renderer final {
         *this = std::move(other);
     }
     Renderer &operator=(Renderer &&other) noexcept {
+        if (item) SDL_DestroyRenderer(item);
         item = std::exchange(other.item, nullptr);
 
         return *this;

@@ -35,6 +35,7 @@ class MJSDL_NODISCARD AsyncIOQueue final {
         *this = std::move(other);
     }
     AsyncIOQueue &operator=(AsyncIOQueue &&other) noexcept {
+        if (item) SDL_DestroyAsyncIOQueue(item);
         item = std::exchange(other.item, nullptr);
 
         return *this;

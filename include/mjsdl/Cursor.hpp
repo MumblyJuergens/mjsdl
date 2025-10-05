@@ -29,6 +29,7 @@ class MJSDL_NODISCARD Cursor final {
         *this = std::move(other);
     }
     Cursor &operator=(Cursor &&other) noexcept {
+        if (item) SDL_DestroyCursor(item);
         item = std::exchange(other.item, nullptr);
 
         return *this;

@@ -42,6 +42,7 @@ class MJSDL_NODISCARD GPUTransferBuffer final {
         *this = std::move(other);
     }
     GPUTransferBuffer &operator=(GPUTransferBuffer &&other) noexcept {
+        if (item) SDL_ReleaseGPUTransferBuffer(_device, item);
         item = std::exchange(other.item, nullptr);
 
         _device = std::exchange(other._device, decltype(_device){});

@@ -41,6 +41,7 @@ class MJSDL_NODISCARD GPUTexture final {
         *this = std::move(other);
     }
     GPUTexture &operator=(GPUTexture &&other) noexcept {
+        if (item) SDL_ReleaseGPUTexture(_device, item);
         item = std::exchange(other.item, nullptr);
 
         _device = std::exchange(other._device, decltype(_device){});

@@ -37,6 +37,7 @@ class MJSDL_NODISCARD AudioStream final {
         *this = std::move(other);
     }
     AudioStream &operator=(AudioStream &&other) noexcept {
+        if (item) SDL_DestroyAudioStream(item);
         item = std::exchange(other.item, nullptr);
 
         return *this;

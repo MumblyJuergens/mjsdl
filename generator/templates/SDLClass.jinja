@@ -51,6 +51,7 @@ class MJSDL_NODISCARD {{cpp_name}} final
     MJSDL_NODISCARD {{cpp_name}}({{cpp_name}} &&other) noexcept { *this=std::move(other); }
     {{cpp_name}}& operator=({{cpp_name}} &&other) noexcept
     {
+        if (item) SDL_{{sdl_dtor_verb}}{{cpp_name}}({% for x in ctor_args if x.dtor_arg %}_{{x.name}},{% endfor %} item);
         item = std::exchange(other.item, nullptr);
         {% for x in ctor_args if x.store %}
             _{{x.name}} = std::exchange(other._{{x.name}}, decltype(_{{x.name}}){});

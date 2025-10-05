@@ -41,6 +41,7 @@ class MJSDL_NODISCARD GPUSampler final {
         *this = std::move(other);
     }
     GPUSampler &operator=(GPUSampler &&other) noexcept {
+        if (item) SDL_ReleaseGPUSampler(_device, item);
         item = std::exchange(other.item, nullptr);
 
         _device = std::exchange(other._device, decltype(_device){});
