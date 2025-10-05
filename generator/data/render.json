@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Texture",
+        "ctor_args": [
+            { "type": "SDL_Renderer*", "name": "renderer" },
+            { "type": "SDL_PixelFormat", "name": "format" },
+            { "type": "SDL_TextureAccess", "name": "access" },
+            { "type": "int", "name": "w" },
+            { "type": "int", "name": "h" },
+        ]
+    }
+]
