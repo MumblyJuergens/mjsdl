@@ -1,5 +1,9 @@
 #pragma once
 
+{%- for x in guard_defines %}
+#ifdef {{ x }}
+{% endfor %}
+
 #include <SDL3/SDL_version.h>
 #if SDL_VERSION_ATLEAST({{min_sdl_version}})
 
@@ -14,7 +18,7 @@
 #include {{ x }}
 {% endfor %}
 
-namespace mjsdl
+namespace {{ namespace }}
 {
 
 class MJSDL_NODISCARD {{cpp_name}} final
@@ -40,7 +44,7 @@ class MJSDL_NODISCARD {{cpp_name}} final
     {%- endif -%}
     {
         {%- set comma = joiner(',') %}
-        item = SDL_Create{{cpp_name}}({% for x in ctor_args %}{{ comma() }}{{x.name}}{% endfor %});
+        item = {{prefix}}{{sdl_ctor_verb}}{{cpp_name}}({% for x in ctor_args %}{{ comma() }}{{x.name}}{% endfor %});
         guard(item);
     }
     {% endif %}
@@ -51,7 +55,7 @@ class MJSDL_NODISCARD {{cpp_name}} final
     MJSDL_NODISCARD {{cpp_name}}({{cpp_name}} &&other) noexcept { *this=std::move(other); }
     {{cpp_name}}& operator=({{cpp_name}} &&other) noexcept
     {
-        if (item) SDL_{{sdl_dtor_verb}}{{cpp_name}}({% for x in ctor_args if x.dtor_arg %}_{{x.name}},{% endfor %} item);
+        if (item) {{prefix}}{{sdl_dtor_verb}}{{cpp_name}}({% for x in ctor_args if x.dtor_arg %}_{{x.name}},{% endfor %} item);
         item = std::exchange(other.item, nullptr);
         {% for x in ctor_args if x.store %}
             _{{x.name}} = std::exchange(other._{{x.name}}, decltype(_{{x.name}}){});
@@ -62,7 +66,7 @@ class MJSDL_NODISCARD {{cpp_name}} final
     {% if not no_dtor %}
     ~{{cpp_name}}()
     {
-        if (item) SDL_{{sdl_dtor_verb}}{{cpp_name}}({% for x in ctor_args if x.dtor_arg %}_{{x.name}},{% endfor %} item);
+        if (item) {{prefix}}{{sdl_dtor_verb}}{{cpp_name}}({% for x in ctor_args if x.dtor_arg %}_{{x.name}},{% endfor %} item);
     }
     {% endif %}
 
@@ -78,6 +82,12 @@ class MJSDL_NODISCARD {{cpp_name}} final
 
 };
 
-} // End of namespace mjsdl.
+} // End of namespace {{ namespace }}.
 
 #endif
+
+{%- for x in guard_defines %}
+#endif
+{% endfor %}
+
+

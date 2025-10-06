@@ -16,4 +16,7 @@ set(MJSDL_GENERATED_HEADERS
     include/mjsdl/Renderer.hpp
     include/mjsdl/Window.hpp
     include/mjsdl/Texture.hpp
+    include/mjsdl/RendererTextEngine.hpp
+    include/mjsdl/Font.hpp
+    include/mjsdl/Text.hpp
 )

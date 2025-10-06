@@ -1,0 +1,46 @@
+[
+    {
+        "name": "RendererTextEngine",
+        "sdl_type": "TTF_TextEngine*",
+        "guard_defines": [ "MJSDL_USING_TTF" ],
+        "namespace": "mjsdl::ttf",
+        "prefix": "TTF_",
+        "extra_headers": [
+            "<SDL3_ttf/SDL_ttf.h>",
+        ],
+        "ctor_args": [
+                { "type": "SDL_Renderer *", "name":"renderer" },
+            ],
+    },
+    {
+        "name": "Font",
+        "guard_defines": [ "MJSDL_USING_TTF" ],
+        "namespace": "mjsdl::ttf",
+        "prefix": "TTF_",
+        "ctor_verb": "Open",
+        "dtor_verb": "Close",
+        "extra_headers": [
+            "<SDL3_ttf/SDL_ttf.h>",
+        ],
+        "ctor_args": [
+                { "type": "const char *", "name":"file" },
+                { "type": "float", "name":"ptsize" },
+            ],
+        "toys": "toys/TTFFontToys.inc"
+    },
+    {
+        "name": "Text",
+        "guard_defines": [ "MJSDL_USING_TTF" ],
+        "namespace": "mjsdl::ttf",
+        "prefix": "TTF_",
+        "extra_headers": [
+            "<SDL3_ttf/SDL_ttf.h>",
+        ],
+        "ctor_args": [
+                { "type": "TTF_TextEngine *", "name":"engine" },
+                { "type": "TTF_Font *", "name":"font" },
+                { "type": "const char *", "name":"text" },
+                { "type": "size_t", "name":"length" },
+            ],
+    },
+] 

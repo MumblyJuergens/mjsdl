@@ -41,7 +41,9 @@ def go(filename: str) -> None:
 
     for cpp in data:
         cpp_name = cpp["name"]
-        sdl_type = cpp.get("sdl_type", f"SDL_{cpp_name} *")
+        prefix=cpp.get("prefix", "SDL_")
+        sdl_type = cpp.get("sdl_type", f"{prefix}{cpp_name} *")
+        sdl_ctor_verb = cpp.get("ctor_verb", "Create")
         sdl_dtor_verb = cpp.get("dtor_verb", "Destroy")
         extra_headers = cpp.get("extra_headers", [])
         no_ctor = True
@@ -49,6 +51,8 @@ def go(filename: str) -> None:
         no_native_ctor = cpp.get("no_native_ctor", False)
         no_dtor = cpp.get("no_dtor", False)
         min_sdl_version = cpp.get("min_sdl_version", "3, 2, 0")
+        guard_defines = cpp.get("guard_defines", [])
+        namespace = cpp.get("namespace", "mjsdl")
 
         headers.append(cpp_name)
 
@@ -76,6 +80,7 @@ def go(filename: str) -> None:
             cpp_name=cpp_name,
             sdl_type=sdl_type,
             sdl_dtor_verb=sdl_dtor_verb,
+            sdl_ctor_verb=sdl_ctor_verb,
             extra_headers=extra_headers,
             toys=toys,
             ctor_args=ctor_args,
@@ -85,6 +90,9 @@ def go(filename: str) -> None:
             no_native_ctor=no_native_ctor,
             no_dtor=no_dtor,
             min_sdl_version=min_sdl_version,
+            guard_defines=guard_defines,
+            namespace=namespace,
+            prefix=prefix
         )
 
         with open(

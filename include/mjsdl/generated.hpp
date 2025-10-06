@@ -16,3 +16,6 @@
 #include "Renderer.hpp"
 #include "Window.hpp"
 #include "Texture.hpp"
+#include "RendererTextEngine.hpp"
+#include "Font.hpp"
+#include "Text.hpp"
