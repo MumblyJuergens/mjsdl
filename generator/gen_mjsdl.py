@@ -30,6 +30,16 @@ def process_data_files() -> None:
         "../cmake/generated.cmake", mode="w", encoding="utf-8"
     ) as cmakeout:  # lol make out
         print(output, file=cmakeout)
+    
+    template = env.get_template("fwd.hpp.jinja")
+    output = template.render(
+        headers=headers,
+    )
+    with open(
+        "../include/mjsdl/fwd.hpp", mode="w", encoding="utf-8"
+    ) as cmakeout:  # lol make out
+        print(output, file=cmakeout)
+
 
 
 def go(filename: str) -> None:

@@ -1,0 +1,9 @@
+#pragma once
+
+namespace mjsdl
+{
+    {%- for header in headers %}
+    struct {{header}};
+    {%- endfor %}
+
+} // namespace mjsdl.
