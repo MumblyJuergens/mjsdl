@@ -7,11 +7,12 @@ project(mjsdl
         LANGUAGES CXX)
 
 option(MJSDL_WORK_HARD "Just for during development" OFF)
-
+option(MJSDL_SUPPLY_SDL3 "Import the SDL3 package" ON)
 
 include(GNUInstallDirs)
-
-find_package(SDL3 REQUIRED)
+if(MJSDL_SUPPLY_SDL3)
+    find_package(SDL3 REQUIRED)
+endif()
 # CPMAddPackage("gh:libsdl-org/SDL#release-3.2.20")
 
 
