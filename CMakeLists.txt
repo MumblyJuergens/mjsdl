@@ -38,6 +38,9 @@ IF(MJSDL_WORK_HARD)
     MJSDLFullCompilerWarnings(mjsdl INTERFACE)
 endif()
 
+if(PROJECT_IS_TOP_LEVEL)
+else()
+
 install(TARGETS mjsdl EXPORT ${PROJECT_NAME}_Targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -76,7 +79,4 @@ if(MJSDL_WORK_HARD)
     MJSDLFullCompilerWarnings(testharness PUBLIC)
 endif()
 
-if(NOT_SUBPROJECT)
-    # add_subdirectory(cmake/packaging)
 endif()
-
