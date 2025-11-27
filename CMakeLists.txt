@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.29)
 
+if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    set(IS_TOP_CMAKE)
+endif()
+
 project(mjsdl
         VERSION 0.1.0
         DESCRIPTION "A C++ light wrapper for SDL3 for lifetime safety (and a couple of helpers)"
@@ -38,8 +42,7 @@ IF(MJSDL_WORK_HARD)
     MJSDLFullCompilerWarnings(mjsdl INTERFACE)
 endif()
 
-if(PROJECT_IS_TOP_LEVEL)
-else()
+if(IS_TOP_CMAKE)
 
 install(TARGETS mjsdl EXPORT ${PROJECT_NAME}_Targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
