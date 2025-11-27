@@ -26,7 +26,7 @@ struct guard_throws {
 };
 
 struct guard_callback {
-    void(*callback)(const char *errmsg) = nullptr;
+    static inline void(*callback)(const char *errmsg) = nullptr;
     void operator()(bool test) {
         if (!test && callback) callback(SDL_GetError());
     }
